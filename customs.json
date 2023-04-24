@@ -1,0 +1,10 @@
+{
+    "elements": {},
+    "attributes": {
+        "th:text": {},
+        "th:href": {
+            "context": "link"
+        },
+        "th:each": {}
+    }
+}
