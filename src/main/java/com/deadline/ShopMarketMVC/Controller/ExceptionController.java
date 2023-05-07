@@ -4,6 +4,7 @@
  */
 package com.deadline.ShopMarketMVC.Controller;
 
+import com.deadline.ShopMarketMVC.Exception.AppException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,11 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @ControllerAdvice
 public class ExceptionController {
-    
+
     @ExceptionHandler(NullPointerException.class)
     public String nullPointer(Exception ex) {
         ex.printStackTrace();
         return "error";
     }
-    
+
+    @ExceptionHandler(AppException.class)
+    public String notFoundCustomer(AppException ex, Model model) {
+        model.addAttribute("code", ex.getCode());
+        model.addAttribute("message", ex.getMessage());
+        return "error";
+    }
+
 }

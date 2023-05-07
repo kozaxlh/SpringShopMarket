@@ -18,13 +18,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <th>Password</th>
                 <th>Address</th>
                 <th>City</th>
+                <th>Select</th>
             </tr>
             <tr th:each = "customer : ${customerList}">
                 <th th:text = "${customer.customerID}"></th>
                 <th th:text = "${customer.fullname}"></th>
                 <th th:text = "${customer.password}"></th>
                 <th th:text = "${customer.address}"></th>
-                <th th:text = "${customer.city}"></th>                
+                <th th:text = "${customer.city}"></th>
+                <th><a th:href="@{./customers/{id}(id = ${customer.customerID})}" target="_self">Detail</a></th>
             </tr>
         </table>
     </body>

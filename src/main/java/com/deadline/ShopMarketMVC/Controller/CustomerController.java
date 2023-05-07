@@ -5,6 +5,7 @@
 package com.deadline.ShopMarketMVC.Controller;
 
 import com.deadline.ShopMarketMVC.Model.Customers;
+import com.deadline.ShopMarketMVC.Service.CustomerService;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,15 +24,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class CustomerController {
+//    @Autowired
+//    private EntityManagerFactory entityManagerFactory;
     @Autowired
-    private EntityManagerFactory entityManagerFactory;
+    private CustomerService customerService;
     
     @RequestMapping(value = "/customers")
     @Transactional
     public String loadCustomerList(Model model) {
-        Session session = entityManagerFactory.createEntityManager().unwrap(Session.class);
+//        Session session = entityManagerFactory.createEntityManager().unwrap(Session.class);
         
-        List<Customers> list = session.createQuery("FROM Customers", Customers.class).list();
+//        List<Customers> list = session.createQuery("FROM Customers", Customers.class).list();
+        List<Customers> list = customerService.getCustomerList();
         
         model.addAttribute("customerList", list);
         
@@ -42,6 +47,12 @@ public class CustomerController {
         model.addAttribute("customerList", "Hello");
         
         return "index";
+    }
+    
+    @RequestMapping(value = "/customers/{id}")
+    public String findCustomerByID(@PathVariable Integer id, Model model) {
+        model.addAttribute("customerList",customerService.getCustomerByID(id));
+        return "customers";
     }
     
 }
