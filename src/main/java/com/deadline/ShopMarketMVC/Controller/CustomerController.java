@@ -7,7 +7,6 @@ package com.deadline.ShopMarketMVC.Controller;
 import com.deadline.ShopMarketMVC.Model.Customers;
 import com.deadline.ShopMarketMVC.Service.CustomerServiceImpl;
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,6 @@ public class CustomerController {
     private CustomerServiceImpl customerService;
 
     @RequestMapping(value = "/customers")
-    @Transactional
     public String loadCustomerList(Model model) {
 //        Session session = entityManagerFactory.createEntityManager().unwrap(Session.class);
 
