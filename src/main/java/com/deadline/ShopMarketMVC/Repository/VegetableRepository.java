@@ -4,7 +4,8 @@
  */
 package com.deadline.ShopMarketMVC.Repository;
 
-import com.deadline.ShopMarketMVC.Model.Customers;
+import com.deadline.ShopMarketMVC.Model.Vegetable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author Admin
  */
 @Repository
-public interface CustomerRepository extends JpaRepository<Customers, Integer> {
-    Customers findByFullnameAndPassword(String fullname, String password);
+public interface VegetableRepository extends JpaRepository<Vegetable, Integer> {
+    List<Vegetable> findByCatagoryID(Integer categoryID);
 }
