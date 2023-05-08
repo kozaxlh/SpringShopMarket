@@ -18,10 +18,10 @@ public class OrderdetailPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "OrderID")
-    private int orderID;
+    private Integer orderID;
     @Basic(optional = false)
     @Column(name = "VegetableID")
-    private int vegetableID;
+    private Integer vegetableID;
 
     public OrderdetailPK() {
     }

@@ -50,7 +50,7 @@ public class Vegetable implements Serializable {
     
     @Basic(optional = false)
     @Column(name = "CatagoryID")
-    private int catagoryID;
+    private Integer catagoryID;
     
     @Basic(optional = false)
     @Column(name = "VegetableName")
@@ -62,7 +62,7 @@ public class Vegetable implements Serializable {
     
     @Basic(optional = false)
     @Column(name = "Amount")
-    private int amount;
+    private Integer amount;
     
     @Basic(optional = false)
     @Column(name = "Image")
@@ -70,7 +70,7 @@ public class Vegetable implements Serializable {
     
     @Basic(optional = false)
     @Column(name = "Price")
-    private float price;
+    private Float price;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CatagoryID" , insertable=false, updatable=false)

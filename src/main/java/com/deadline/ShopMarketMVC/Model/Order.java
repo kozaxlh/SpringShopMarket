@@ -53,7 +53,7 @@ public class Order implements Serializable {
     private Date date;
     @Basic(optional = false)
     @Column(name = "Total")
-    private float total;
+    private Float total;
     @Basic(optional = false)
     @Lob
     @Column(name = "Note")
