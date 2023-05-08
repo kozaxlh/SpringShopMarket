@@ -53,7 +53,7 @@ public class Vegetable implements Serializable {
     private Integer catagoryID;
     
     @Basic(optional = false)
-    @Column(name = "VegetableName")
+    @Column(name = "vegetable_name")
     private String vegetableName;
     
     @Basic(optional = false)
