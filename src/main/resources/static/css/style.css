@@ -1,14 +1,8 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : Apr 12, 2023, 8:10:52 PM
-    Author     : Admin
-*/
 * {
-   margin: 0;
-   padding: 0;
    box-sizing: border-box;
    font-family: "Quicksand", sans-serif;
+}
+
+table, th, tr {
+  border: 1px solid;
 }
