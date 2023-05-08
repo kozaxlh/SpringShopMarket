@@ -5,18 +5,16 @@
 package com.deadline.ShopMarketMVC.Controller;
 
 import com.deadline.ShopMarketMVC.Model.Customers;
-import com.deadline.ShopMarketMVC.Service.CustomerService;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
+import com.deadline.ShopMarketMVC.Service.CustomerServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -24,35 +22,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class CustomerController {
-//    @Autowired
-//    private EntityManagerFactory entityManagerFactory;
+
     @Autowired
-    private CustomerService customerService;
-    
+    private CustomerServiceImpl customerService;
+
     @RequestMapping(value = "/customers")
     @Transactional
     public String loadCustomerList(Model model) {
 //        Session session = entityManagerFactory.createEntityManager().unwrap(Session.class);
-        
+
 //        List<Customers> list = session.createQuery("FROM Customers", Customers.class).list();
         List<Customers> list = customerService.getCustomerList();
-        
+
         model.addAttribute("customerList", list);
-        
+
         return "customers";
     }
-    
-    @RequestMapping(value = "/hello")
-    public String show(Model model) {
-        model.addAttribute("customerList", "Hello");
-        
-        return "index";
-    }
-    
+
     @RequestMapping(value = "/customers/{id}")
     public String findCustomerByID(@PathVariable Integer id, Model model) {
-        model.addAttribute("customerList",customerService.getCustomerByID(id));
+        model.addAttribute("customerList", customerService.getCustomerByID(id));
         return "customers";
     }
+
+    @RequestMapping(value = "/login")
+    public String showLogin() {
+        return "login";
+    }
+
+    @RequestMapping(value = "/checklogin")
+    public String login(Model model,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            HttpSession session) {
+        if (customerService.checkLogin(username, password)) {
+            session.setAttribute("user", username);
+            return "redirect:";
+        }
+        else {
+            model.addAttribute("ERROR", "Username or password is wrong");
+            return "login";
+        }
+    }
     
+    @RequestMapping(value = "/logout")
+    public String login(HttpSession session) {
+            session.removeAttribute("user");
+            return "redirect:";
+        }
 }
