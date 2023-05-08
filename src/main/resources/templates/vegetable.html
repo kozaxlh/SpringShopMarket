@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1><a th:href = "@{/}">Home</a></h1>
+        <h1>Customer List</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+            <tr th:each = "vegetable : ${vegetalbeList}">
+                <th th:text = "${vegetable.vegetableID}"></th>
+                <th th:text = "${vegetable.vegetableName}"></th>
+                <th><img th:src = "@{/images/{image} (image = ${vegetable.image})}" width="50" height="50" th:alt="${vegetable.vegetableName}"/></th>
+                <th th:text = "${vegetable.category.name}"></th>
+                <th th:text = "${vegetable.unit}"></th>
+                <th th:text = "${vegetable.price}"></th>
+                <th><a>Buy</a></th>
+            </tr>
+        </table>
+    </body>
+</html>

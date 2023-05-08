@@ -8,11 +8,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <title>ShopMarket</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" th:href="@{/style.css}"/>
+        <link rel="stylesheet" th:href="@{/css/style.css}"/>
     </head>
     <body>
-        <h1>Hello world</h1>
-        <!--<p th:text="%{customerList}"></p>-->
-        <a th:href="@{/customers}">Click Me</a>
+        <h1 th:text = "${session.user != null} ? 'Hello ' + ${session.user} : 'Hello world'">Hello world</h1>
+        <a th:href="@{/customers}">Customer</a>
+        <a th:href="@{/vegetable}">Vegetable</a>
+        <div th:switch = "${session.user != null}">
+            <a th:case = "false" th:href="@{/login}">Login</a>
+            <a th:case = "true"  th:href="@{/logout}">Log out</a>
+        </div>
     </body>
 </html>
