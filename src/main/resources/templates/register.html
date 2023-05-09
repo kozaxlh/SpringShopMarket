@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Register</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<link rel="stylesheet" th:href="@{/css/style.css}"/>-->
+        <script type="text/javascript" th:src="@{/js/validator.js}"></script>
+    </head>
+    <body>
+        <h1><a th:href = "@{/}">Home</a></h1>
+        <div class="login-admin">
+            <div class="form-overlay" th:text = "${ERROR}"></div>
+            <form class="form-content" th:object = "${user}" th:action="@{/checkregister}" target="_self" method="post">
+                <h1>Register</h1>
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="fullname"
+                        placeholder="Username"
+                        value=""
+                        />
+                    <span class="message-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input
+                        class="form-input"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value=""
+                        />
+                    <span class="message-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm password</label>
+                    <input
+                        class="form-input"
+                        type="password"
+                        name="confirm-password"
+                        placeholder="Confirm password"
+                        value=""
+                        />
+                    <span class="message-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Address</label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="address"
+                        placeholder="Address"
+                        value=""
+                        />
+                    <span class="message-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">City</label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="city"
+                        placeholder="City"
+                        value=""
+                        />
+                    <span class="message-error"></span>
+                </div>
+                <button type="submit" class="btn-login form-submit">
+                    Đăng ký
+                </button>
+            </form>
+        </div>
+
+        <script>
+            const $ = document.querySelector.bind(document);
+            const $$ = document.querySelectorAll.bind(document);
+            let users = JSON.parse(localStorage.getItem("myUsers"));
+            Validator({
+                form: ".form-content",
+                formGroupSelector: ".form-group",
+                errorSelector: ".message-error",
+                rules: [
+                    Validator.isRequired(
+                            'input[name="fullname"]',
+                            "Vui lòng nhập username"
+                            ),
+                    
+                    Validator.isRequired(
+                            'input[name="password"]',
+                            "Vui lòng nhập mật khẩu"
+                            ),
+                    Validator.isRequired(
+                            'input[name="confirm-password"]',
+                            "Vui lòng nhập mật khẩu"
+                            ),
+                    Validator.isDuplicated(
+                            'input[name="confirm-password"]',
+                            () => $('input[name="password"]').value,
+                            "Mật khẩu không trùng"
+                            ),
+                    Validator.isRequired(
+                            'input[name="address"]',
+                            "Vui lòng nhập địa chỉ"
+                            ),
+                    Validator.isRequired(
+                            'input[name="city"]',
+                            "Vui lòng nhập thành phố"
+                            ),
+                ],
+            });
+
+            function resetInput() {
+                let inputs = $$("input");
+                for (let input of inputs) {
+                    input.value = "";
+                }
+            }
+            enableSubmit();
+
+            function enableSubmit() {
+                $("body").addEventListener("keypress", (e) => {
+                    if (e.keyCode === 13)
+                        $("button").click();
+                });
+            }
+        </script>
+    </body>
+</html>
