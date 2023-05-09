@@ -5,7 +5,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" th:href="@{/css/style.css}"/>-->
@@ -15,7 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <h1><a th:href = "@{/}">Home</a></h1>
         <div class="login-admin">
             <div class="form-overlay" th:text = "${ERROR}"></div>
-            <form class="form-content" action="/checklogin" target="_self" method="post">
+            <form class="form-content" th:action="@{/checklogin}" target="_self" method="post">
                 <h1>Login</h1>
                 <div class="form-group">
                     <label class="form-label">Username</label>
