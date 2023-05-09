@@ -68,6 +68,13 @@ public class Customers implements Serializable {
         this.fullname = fullname;
     }
 
+    public Customers(String password, String fullname, String address, String city) {
+        this.password = password;
+        this.fullname = fullname;
+        this.address = address;
+        this.city = city;
+    }
+
     public Integer getCustomerID() {
         return customerID;
     }
@@ -139,7 +146,9 @@ public class Customers implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.Customers[ customerID=" + customerID + " ]";
+        return "Customers{" + "password=" + password + ", fullname=" + fullname + ", address=" + address + ", city=" + city + '}';
     }
+
+    
     
 }

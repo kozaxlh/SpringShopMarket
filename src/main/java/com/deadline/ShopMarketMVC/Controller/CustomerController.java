@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,9 +28,6 @@ public class CustomerController {
 
     @RequestMapping(value = "/customers")
     public String loadCustomerList(Model model) {
-//        Session session = entityManagerFactory.createEntityManager().unwrap(Session.class);
-
-//        List<Customers> list = session.createQuery("FROM Customers", Customers.class).list();
         List<Customers> list = customerService.getCustomerList();
 
         model.addAttribute("customerList", list);
@@ -62,10 +60,27 @@ public class CustomerController {
             return "login";
         }
     }
-    
+
     @RequestMapping(value = "/logout")
     public String login(HttpSession session) {
-            session.removeAttribute("user");
-            return "redirect:";
+        session.removeAttribute("user");
+        return "redirect:";
+    }
+
+    @RequestMapping(value = "/register")
+    public String showRegister() {
+        return "register";
+    }
+
+    @RequestMapping(value = "/checkregister")
+    public String register(@ModelAttribute("user") Customers user, HttpSession session, Model model) {
+        if (customerService.save(user) != null) {
+            session.setAttribute("user", user.getFullname());
         }
+        else {
+            model.addAttribute("ERROR", "Username đã tồn tại");
+            return "register";
+        }
+        return "redirect:";
+    }
 }

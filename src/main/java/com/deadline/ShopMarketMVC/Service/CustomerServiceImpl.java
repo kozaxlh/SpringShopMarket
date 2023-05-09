@@ -41,6 +41,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customers save(Customers customer) {
-        return customerRepository.save(customer);
+        if(customerRepository.findByFullname(customer.getFullname()) == null)
+            return customerRepository.save(customer);
+//        else
+//            throw new AppException(500,"Đã tồn tại username");
+        return null;
     }
 }
