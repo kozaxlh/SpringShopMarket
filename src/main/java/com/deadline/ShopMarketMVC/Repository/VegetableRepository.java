@@ -7,6 +7,7 @@ package com.deadline.ShopMarketMVC.Repository;
 import com.deadline.ShopMarketMVC.Model.Vegetable;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,4 +19,12 @@ public interface VegetableRepository extends JpaRepository<Vegetable, Integer> {
     List<Vegetable> findByCatagoryID(Integer categoryID);
     List<Vegetable> findByVegetableNameContaining(String name);
     List<Vegetable> findByCatagoryIDAndVegetableNameContaining(Integer categoryID, String name);
+    @Query("SELECT V\n" +
+            "FROM Vegetable V INNER JOIN OrderDetail OD ON OD.vegetable.vegetableID = V.vegetableID\n" +
+            "                 INNER JOIN `Order` O INNER JOIN OrderDetail ON O.orderID = OD.order.orderID\n" +
+            "WHERE month(O.date) = month(CURRENT_DATE) - 1 AND year(O.date) = year(CURRENT_DATE)\n" +
+            "GROUP BY V.vegetableName\n" +
+            "ORDER BY sum(OD.quantity) DESC")
+    List<Vegetable> getBestSaleVegetable();
+
 }
