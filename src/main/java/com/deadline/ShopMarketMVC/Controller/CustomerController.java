@@ -51,8 +51,9 @@ public class CustomerController {
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             HttpSession session) {
-        if (customerService.checkLogin(username, password)) {
-            session.setAttribute("user", username);
+        Customers user = customerService.checkLogin(username, password);
+        if (user != null) {
+            session.setAttribute("user", user);
             return "redirect:";
         }
         else {
@@ -74,8 +75,9 @@ public class CustomerController {
 
     @RequestMapping(value = "/checkregister")
     public String register(@ModelAttribute("user") Customers user, HttpSession session, Model model) {
-        if (customerService.save(user) != null) {
-            session.setAttribute("user", user.getFullname());
+        Customers customer = customerService.save(user);
+        if (customer != null) {
+            session.setAttribute("user", user);
         }
         else {
             model.addAttribute("ERROR", "Username đã tồn tại");
