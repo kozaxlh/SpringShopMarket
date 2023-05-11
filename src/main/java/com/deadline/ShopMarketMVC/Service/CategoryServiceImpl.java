@@ -4,6 +4,10 @@
  */
 package com.deadline.ShopMarketMVC.Service;
 
+import com.deadline.ShopMarketMVC.Model.Category;
+import com.deadline.ShopMarketMVC.Repository.CategoryRepository;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +16,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
+    @Autowired
+    private CategoryRepository categoryRepository;
     
+    public List<Category> getCategoryList() {
+        List<Category> list = categoryRepository.findAll();
+        return list;
+    }
 }
