@@ -26,11 +26,11 @@ function Validator(options) {
             case 'checkbox': case 'radio':
                errorMessage = ruleInput(
                   formElement.querySelector(rule.selector + ':checked')
-               )
+               );
                break;
 
             default:
-               errorMessage = ruleInput(inputElement.value)
+               errorMessage = ruleInput(inputElement.value);
          }
 
          if (errorMessage) break;
@@ -60,9 +60,9 @@ function Validator(options) {
          let isFormValid = true;
 
          options.rules.forEach(rule => {
-            let inputElement = formElement.querySelector(rule.selector)
+            let inputElement = formElement.querySelector(rule.selector);
 
-            let isValid = valiadate(inputElement, rule)
+            let isValid = valiadate(inputElement, rule);
             if (!isValid) {
                isFormValid = false;
             }
@@ -71,7 +71,7 @@ function Validator(options) {
          if (isFormValid) {
             //JS Submit
             if (typeof options.onSubmit === 'function') {
-               let enableInputs = formElement.querySelectorAll('[name]')
+               let enableInputs = formElement.querySelectorAll('[name]');
                let formValues = Array.from(enableInputs).reduce(
                   (values, input) => {
                      switch (input.type) {
@@ -86,7 +86,7 @@ function Validator(options) {
                            if (!Array.isArray(values[input.name])) {
                               values[input.name] = [];
                            }
-                           values[input.name].push(input.value)
+                           values[input.name].push(input.value);
                            break;
                         case 'file':
                            values[input.name] = input.files;
@@ -98,14 +98,14 @@ function Validator(options) {
                      return values;
                   }, {});
 
-               options.onSubmit(formValues)
+               options.onSubmit(formValues);
             }
             //Default Submit
             else {
                formElement.submit();
             }
          }
-      }
+      };
 
       //Get rule for handle
       options.rules.forEach(rule => {
@@ -117,7 +117,7 @@ function Validator(options) {
             selectorRules[rule.selector] = [rule.test];
          }
 
-         let inputElements = formElement.querySelectorAll(rule.selector)
+         let inputElements = formElement.querySelectorAll(rule.selector);
 
          for (let inputElement of inputElements) {
             if (inputElement) {
@@ -138,7 +138,7 @@ function Validator(options) {
                //Handle change
                inputElement.onchange = () => {
                   valiadate(inputElement, rule);
-               }
+               };
             }
          }
       });
@@ -152,21 +152,21 @@ Validator.isRequired = (myNode, message) => {
       test: function (value) {
          if (!value)
             value = '';
-         return value ? undefined : message || 'Vui lòng nhập trường này'
+         return value ? undefined : message || 'Vui lòng nhập trường này';
       }
    };
-}
+};
 
 Validator.isEmail = (myNode, message) => {
    return {
       selector: myNode,
       test: function (value) {
-         let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+         let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
          return regex.test(value) ? undefined : message || 'Vui lòng nhập lại email';
       }
    };
-}
+};
 
 Validator.minLength = (myNode, min, message) => {
    return {
@@ -175,24 +175,24 @@ Validator.minLength = (myNode, min, message) => {
          return value.length < min ? message || `Vui lòng nhập tối thiểu ${min} kí tự` : undefined;
       }
    };
-}
+};
 
 Validator.isDuplicated = (myNode, getConfirmValue, message) => {
    return {
       selector: myNode,
       test: function (value) {
-         return value === getConfirmValue() ? undefined : message || 'Giá trị nhập vào không chính xác'
+         return value === getConfirmValue() ? undefined : message || 'Giá trị nhập vào không chính xác';
       }
    };
-}
+};
 
 Validator.isCorrectPhone = (myNode, message) => {
    return {
       selector: myNode,
       test: function (value) {
          let regex = /0\d{9}$/gm;
-         return regex.test(value) ? undefined : message || 'Số điện thoại không hợp lệ'
+         return regex.test(value) ? undefined : message || 'Số điện thoại không hợp lệ';
       }
    };
-}
+};
 

@@ -9,11 +9,44 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" th:href="@{/css/style.css}"/>
+        <link rel="stylesheet" href="../static/css/style.css" type="text/css">
+
 
     </head>
     <body>
         <h1><a th:href = "@{/}">Home</a></h1>
         <h1>Vegetable List</h1>
+        <div>
+            <form class="form-content" th:action="@{/searchvegetable}" th:object="${search}" target="_self" method="get">
+                <h2>Tìm kiếm</h1>
+                <span class="form-group">
+                    <label class="form-label">Category</label>
+                    <select
+                        class="form-input"
+                        name="categoryID"
+                        >
+                        <option value="">Không</option>
+                        <option th:each = "category: ${categoryList}" th:value="${category.catagoryID}" th:text = "${category.name}"></option>
+                    </select>
+                    <span class="message-error"></span>
+                </span>
+                <span class="form-group">
+                    <label class="form-label">Vegetable</label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="vegetableName"
+                        placeholder="Vegetable name"
+                        value=""
+                        />
+                    <span class="message-error"></span>
+                </span>
+                <button type="submit" class="btn-login form-submit">
+                    Tìm kiếm
+                </button>
+            </form>
+        </div>
+        <br/>
         <table>
             <tr>
                 <th>ID</th>

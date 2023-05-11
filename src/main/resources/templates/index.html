@@ -11,7 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link rel="stylesheet" th:href="@{/css/style.css}"/>
     </head>
     <body>
-        <h1 th:text = "${session.user != null} ? 'Hello ' + ${session.user} : 'Hello world'">Hello world</h1>
+        <h1 th:text = "${session.user != null} ? 'Hello ' + ${session.user.fullname} : 'Hello world'">Hello world</h1>
         <a th:href="@{/customers}">Customer</a>
         <a th:href="@{/vegetable}">Vegetable</a>
         <div th:switch = "${session.user != null}">
