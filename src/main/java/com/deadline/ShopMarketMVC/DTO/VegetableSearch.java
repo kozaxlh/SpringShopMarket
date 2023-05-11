@@ -4,7 +4,6 @@
  */
 package com.deadline.ShopMarketMVC.DTO;
 
-import com.deadline.ShopMarketMVC.Repository.VegetableSearchEnum;
 import lombok.Data;
 
 /**
