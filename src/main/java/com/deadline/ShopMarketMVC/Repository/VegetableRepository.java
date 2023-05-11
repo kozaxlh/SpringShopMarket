@@ -16,4 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VegetableRepository extends JpaRepository<Vegetable, Integer> {
     List<Vegetable> findByCatagoryID(Integer categoryID);
+    List<Vegetable> findByVegetableNameContaining(String name);
+    List<Vegetable> findByCatagoryIDAndVegetableNameContaining(Integer categoryID, String name);
 }
