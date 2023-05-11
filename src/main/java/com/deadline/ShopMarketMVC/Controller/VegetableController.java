@@ -40,8 +40,17 @@ public class VegetableController {
     
     @RequestMapping(value = "/searchvegetable", method = RequestMethod.GET)
     public String searchVegetable(@ModelAttribute("search") VegetableSearch search, Model model) {
-        System.out.println(search.toString());
         List<Vegetable> list = vegetableService.searchVegetableList(search);
+        
+        model.addAttribute("categoryList", categoryService.getCategoryList());
+        model.addAttribute("vegetableList", list);
+
+        return "vegetable";
+    }
+    
+    @RequestMapping(value = "/bestsale", method = RequestMethod.GET)
+    public String getBestSale(Model model) {
+        List<Vegetable> list = vegetableService.getBestSale();
         
         model.addAttribute("categoryList", categoryService.getCategoryList());
         model.addAttribute("vegetableList", list);
