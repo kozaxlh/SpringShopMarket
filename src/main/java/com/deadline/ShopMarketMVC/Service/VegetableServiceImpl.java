@@ -42,4 +42,10 @@ public class VegetableServiceImpl implements VegetableService {
         };
         return list;
     }
+    
+    public List<Vegetable> getBestSale() {
+        List<Vegetable> list = vegetableRepository.getBestSaleVegetable();
+        list.forEach(System.out::println);
+        return list;
+    }
 }
