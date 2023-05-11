@@ -4,6 +4,7 @@
  */
 package com.deadline.ShopMarketMVC.Service;
 
+import com.deadline.ShopMarketMVC.DTO.VegetableSearch;
 import com.deadline.ShopMarketMVC.Model.Vegetable;
 import com.deadline.ShopMarketMVC.Repository.VegetableRepository;
 import java.util.List;
@@ -15,17 +16,30 @@ import org.springframework.stereotype.Service;
  * @author Admin
  */
 @Service
-public class VegetableServiceImpl implements VegetableService{
+public class VegetableServiceImpl implements VegetableService {
+
     @Autowired
     private VegetableRepository vegetableRepository;
-    
+
     public List<Vegetable> getVegetableList() {
         List<Vegetable> list = vegetableRepository.findAll();
         return list;
     }
-    
-    public List<Vegetable> getVegetableListByCategory(int categoryID) {
-        List<Vegetable> list = vegetableRepository.findByCatagoryID(categoryID);
+
+    public List<Vegetable> searchVegetableList(VegetableSearch search) {
+        search.setCondition();
+        List<Vegetable> list = null;
+        list = switch (search.getCondition()) {
+            case CATEGORY ->
+                vegetableRepository.findByCatagoryID(search.getCategoryID());
+            case VEGETABLENAME ->
+                vegetableRepository.findByVegetableNameContaining(search.getVegetableName());
+            case BOTH ->
+                vegetableRepository.findByCatagoryIDAndVegetableNameContaining(
+                        search.getCategoryID(), 
+                        search.getVegetableName()
+                );
+        };
         return list;
     }
 }
