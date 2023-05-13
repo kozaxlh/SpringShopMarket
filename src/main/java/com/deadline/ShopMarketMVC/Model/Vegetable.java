@@ -4,6 +4,7 @@
  */
 package com.deadline.ShopMarketMVC.Model;
 
+import com.deadline.ShopMarketMVC.DTO.VegetableDTO;
 import java.io.Serializable;
 import java.util.List;
 import jakarta.persistence.Basic;
@@ -72,7 +73,7 @@ public class Vegetable implements Serializable {
     @Column(name = "Price")
     private Float price;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CatagoryID" , insertable=false, updatable=false)
     private Category category;
     
@@ -192,6 +193,16 @@ public class Vegetable implements Serializable {
     @Override
     public String toString() {
         return "Entity.Vegetable[ vegetableID=" + vegetableID + " ]";
+    }
+    
+    public void loadFromDto(VegetableDTO dto) {
+        this.vegetableID = dto.getVegetableID();
+        this.vegetableName = dto.getVegetableName();
+        this.catagoryID = dto.getCategoryID();
+        this.image = dto.getImage();
+        this.unit = dto.getUnit();
+        this.amount = dto.getAmount();
+        this.price = dto.getPrice();
     }
     
 }
