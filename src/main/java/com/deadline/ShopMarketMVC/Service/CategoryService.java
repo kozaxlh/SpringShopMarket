@@ -4,10 +4,13 @@
  */
 package com.deadline.ShopMarketMVC.Service;
 
+import com.deadline.ShopMarketMVC.Model.Category;
+import java.util.List;
+
 /**
  *
  * @author Admin
  */
 public interface CategoryService {
-    
+    List<Category> getCategoryList();
 }

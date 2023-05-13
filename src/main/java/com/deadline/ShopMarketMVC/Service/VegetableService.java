@@ -4,6 +4,7 @@
  */
 package com.deadline.ShopMarketMVC.Service;
 
+import com.deadline.ShopMarketMVC.DTO.VegetableSearch;
 import com.deadline.ShopMarketMVC.Model.Vegetable;
 import java.util.List;
 
@@ -12,4 +13,9 @@ import java.util.List;
  * @author Admin
  */
 public interface VegetableService {
+    List<Vegetable> getVegetableList();
+    
+    List<Vegetable> searchVegetableList(VegetableSearch search);
+    
+    List<Vegetable> getBestSale();
 }

@@ -5,12 +5,18 @@
 package com.deadline.ShopMarketMVC.Service;
 
 import com.deadline.ShopMarketMVC.Model.Customers;
+import java.util.List;
 
 /**
  *
  * @author Admin
  */
 public interface CustomerService {
-    Customers save(Customers customer);
+    List<Customers> getCustomerList();
     
+    Customers getCustomerByID(Integer id);
+    
+    Customers checkLogin(String username, String password);
+            
+    Customers save(Customers customer);
 }

@@ -21,11 +21,13 @@ public class VegetableServiceImpl implements VegetableService {
     @Autowired
     private VegetableRepository vegetableRepository;
 
+    @Override
     public List<Vegetable> getVegetableList() {
         List<Vegetable> list = vegetableRepository.findAll();
         return list;
     }
 
+    @Override
     public List<Vegetable> searchVegetableList(VegetableSearch search) {
         search.setCondition();
         List<Vegetable> list = null;
@@ -43,9 +45,10 @@ public class VegetableServiceImpl implements VegetableService {
         return list;
     }
     
+    @Override
     public List<Vegetable> getBestSale() {
         List<Vegetable> list = vegetableRepository.getBestSaleVegetable();
-        list.forEach(System.out::println);
+
         return list;
     }
 }
