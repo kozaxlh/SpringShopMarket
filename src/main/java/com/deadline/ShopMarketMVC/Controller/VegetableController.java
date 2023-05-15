@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -34,6 +36,17 @@ public class VegetableController {
         
         model.addAttribute("categoryList", categoryService.getCategoryList());
         model.addAttribute("vegetableList", list);
+
+        return "vegetable";
+    }
+    
+    @RequestMapping(value = "/vegetable/missing")
+    public String errorLoad(@RequestParam("error") String error, Model model) {
+        List<Vegetable> list = vegetableService.getVegetableList();
+        
+        model.addAttribute("categoryList", categoryService.getCategoryList());
+        model.addAttribute("vegetableList", list);
+        model.addAttribute("error",error);
 
         return "vegetable";
     }
