@@ -34,11 +34,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <th><img th:src = "@{/{image} (image = ${item.vegetable.image})}" width="50" height="50" th:alt="${item.vegetable.vegetableName}"/></th>
                         <th id="price" th:text = "${item.vegetable.price}"></th>
                         <th th:text = "${item.vegetable.unit}"></th>
-                        <th><input id="quantity" type="number" th:value = "${item.quantity}" min = "1" th:max = "${item.vegetable.amount}"></th>
+                        <th>
+                            <form th:action="@{/shoppingcart/update}" method="post">
+                                <input type="hidden" th:value="${item.vegetable.vegetableID}" name="id">
+                                <input id="quantity" name = "quantity" type="number" th:value = "${item.quantity}" min = "1" th:max = "${item.vegetable.amount}">
+                                <button type="submit">Update</button>
+                            </form>
+                        </th>
                         <th id="total" th:text = "${item.vegetable.price * item.quantity}"></th>
                         <th><a th:href = "@{/shoppingcart/delete/{id} (id = ${item.vegetable.vegetableID})}">Delete</a></th>
-                    </tr>
-
+                    </tr>         
                 </table>
                 <div class="cart-footer">
                     <div class="total-price-cart">
@@ -46,17 +51,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </div>
                     <button class="continue"><a th:href = "@{/vegetable}">Tiếp tục mua hàng</a></button>
                     <button class="clean-cart"><a th:href = "@{/shoppingcart/clear}">Xóa hết</a></button>
-                    <button class="pay-cart"><a href="./order.html">Đặt hàng >></a></button>
+                    <button class="pay-cart"><a th:href="@{/orders/add}">Đặt hàng >></a></button>
                 </div>
             </div>
         </div>
     </body>
-    <script>
-        let quantityItem = document.querySelector("input#quantity");
-        quantityItem.addEventListener('change', (e) => {
-            let totalItem = document.querySelector("th#total");
-            let total = parseFloat(e.target.value) * parseFloat(document.querySelector("th#price").textContent);
-            totalItem.innerHTML = total;
-        })
-    </script>
+    <!--    <script>
+            let quantityItem = document.querySelector("input#quantity");
+            quantityItem.addEventListener('change', (e) => {
+                let totalItem = document.querySelector("th#total");
+                let total = parseFloat(e.target.value) * parseFloat(document.querySelector("th#price").textContent);
+                totalItem.innerHTML = total;
+            })
+        </script>-->
 </html>
