@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -66,6 +67,12 @@ public class OrderDetailController {
     @RequestMapping(value = "/delete/{id}")
     public String clearCart(@PathVariable("id") Integer id) {
         orderDetailService.remove(id);
+        return "redirect:/shoppingcart";
+    }
+    
+    @RequestMapping(value = "/update")
+    public String updateCart(@RequestParam("id") Integer id, @RequestParam("quantity") short quantity) {
+        orderDetailService.update(id, quantity);
         return "redirect:/shoppingcart";
     }
 }
