@@ -4,8 +4,11 @@
  */
 package com.deadline.ShopMarketMVC.Controller;
 
+import com.deadline.ShopMarketMVC.Model.Customers;
+import com.deadline.ShopMarketMVC.Service.OrderServiceImpl;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class OrderController {
-    
-//    @RequestMapping("/url")
-//    public String page(Model model) {
-//        model.addAttribute("attribute", "value");
-//        return "view.name";
-//    }
-    
+
+    @Autowired
+    private OrderServiceImpl orderService;
+
+    @RequestMapping("/orders/add")
+    public String page(HttpSession session) {
+        orderService.addOrder((Customers) session.getAttribute("user"));
+        return "redirect:/";
+    }
 }
