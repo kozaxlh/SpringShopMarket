@@ -7,7 +7,6 @@ package com.deadline.ShopMarketMVC.Service;
 import com.deadline.ShopMarketMVC.Model.OrderDetail;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
@@ -30,6 +29,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
         else {
             cartItem.setQuantity((short) (cartItem.getQuantity() + 1));
+            cartItem.setPrice(cartItem.getQuantity() * cartItem.getVegetable().getPrice());
         }
     }
 
@@ -42,6 +42,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public OrderDetail update(int id, int quantity) {
         OrderDetail cartItem = maps.get(id);
         cartItem.setQuantity((short)quantity);
+        cartItem.setPrice(cartItem.getQuantity() * cartItem.getVegetable().getPrice());
         return cartItem;
     }
 

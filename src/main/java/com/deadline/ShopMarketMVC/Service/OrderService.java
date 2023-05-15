@@ -4,10 +4,14 @@
  */
 package com.deadline.ShopMarketMVC.Service;
 
+import com.deadline.ShopMarketMVC.Model.Customers;
+
 /**
  *
  * @author Admin
  */
 public interface OrderService {
+
+    void addOrder(Customers user);
     
 }
