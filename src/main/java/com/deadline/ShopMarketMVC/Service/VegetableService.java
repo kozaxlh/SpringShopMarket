@@ -18,4 +18,6 @@ public interface VegetableService {
     List<Vegetable> searchVegetableList(VegetableSearch search);
     
     List<Vegetable> getBestSale();
+
+    Vegetable findByID(Integer id);
 }

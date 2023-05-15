@@ -21,11 +21,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository ;
     
+    @Override
     public List<Customers> getCustomerList() {
         List<Customers> customers = customerRepository.findAll();
         return customers;
     }
     
+    @Override
     public Customers getCustomerByID(Integer id) {
         Optional<Customers> customer = customerRepository.findById(id);
         if(customer.isEmpty())
@@ -33,18 +35,17 @@ public class CustomerServiceImpl implements CustomerService {
         return customer.get();
     }
     
-    public boolean checkLogin(String username, String password) {
+    @Override
+    public Customers checkLogin(String username, String password) {
         Customers customer = customerRepository.findByFullnameAndPassword(username, password);
         
-        return customer != null;
+        return customer;
     }
 
     @Override
     public Customers save(Customers customer) {
         if(customerRepository.findByFullname(customer.getFullname()) == null)
             return customerRepository.save(customer);
-//        else
-//            throw new AppException(500,"Đã tồn tại username");
         return null;
     }
 }

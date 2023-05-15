@@ -51,4 +51,9 @@ public class VegetableServiceImpl implements VegetableService {
 
         return list;
     }
+    
+    @Override
+    public Vegetable findByID(Integer id) {
+        return vegetableRepository.findByVegetableID(id);
+    }
 }
