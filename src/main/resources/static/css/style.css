@@ -10,3 +10,9 @@ table, th, tr {
 .form-content {
     margin-bottom: 20px;
 }
+
+.my-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
