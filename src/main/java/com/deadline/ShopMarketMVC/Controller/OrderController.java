@@ -18,12 +18,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class OrderController {
 
-    @Autowired
-    private OrderServiceImpl orderService;
-
-    @RequestMapping("/orders/add")
-    public String page(HttpSession session) {
-        orderService.addOrder((Customers) session.getAttribute("user"));
-        return "redirect:/";
-    }
 }
