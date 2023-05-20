@@ -1,67 +1,249 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>Shopping cart</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    </head>
-    <body>
-        <h1><a th:href = "@{/}">Home</a></h1>
-        <div class="cart">
-            <div class="modal-cart">
-                <div class="cart-head">
-                    <h1>Giỏ hàng</h1><i class="fas fa-times" onclick="closeModal($('.cart'))"></i>
-                </div>
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Image</th>
-                        <th>Price</th>
-                        <th>Unit</th>
-                        <th>Amount</th>
-                        <th>Total</th>
-                        <th>Delete</th>
-                    </tr>
-                    <tr th:each = "item : ${cartList}">
-                        <th th:text = "${item.vegetable.vegetableID}"></th>
-                        <th th:text = "${item.vegetable.VegetableName}"></th>
-                        <th><img th:src = "@{/{image} (image = ${item.vegetable.image})}" width="50" height="50" th:alt="${item.vegetable.vegetableName}"/></th>
-                        <th id="price" th:text = "${item.vegetable.price}"></th>
-                        <th th:text = "${item.vegetable.unit}"></th>
-                        <th>
-                            <form th:action="@{/shoppingcart/update}" method="post">
-                                <input type="hidden" th:value="${item.vegetable.vegetableID}" name="id">
-                                <input id="quantity" name = "quantity" type="number" th:value = "${item.quantity}" min = "1" th:max = "${item.vegetable.amount}">
-                                <button type="submit">Update</button>
-                            </form>
-                        </th>
-                        <th id="total" th:text = "${item.vegetable.price * item.quantity}"></th>
-                        <th><a th:href = "@{/shoppingcart/delete/{id} (id = ${item.vegetable.vegetableID})}">Delete</a></th>
-                    </tr>         
-                </table>
-                <div class="cart-footer">
-                    <div class="total-price-cart">
-                        <span>Tổng :</span> <span class="total-price" th:text = "${total}">0 đ</span>
-                    </div>
-                    <button class="continue"><a th:href = "@{/vegetable}">Tiếp tục mua hàng</a></button>
-                    <button class="clean-cart"><a th:href = "@{/shoppingcart/clear}">Xóa hết</a></button>
-                    <button class="pay-cart"><a th:href="@{/orders/add}">Đặt hàng >></a></button>
-                </div>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Cart</title>
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
+      <link rel="stylesheet" th:href="@{/css/cart.css}" />
+   </head>
+   <body>
+      <header>
+         <div class="header_top">
+            <div class="header_top_primary" th:switch = "${session.user != null}">
+               <ul th:case = "false">
+                  <li>
+                     <a th:href="@{/register}"
+                        ><i class="fa fa-lock"></i>Đăng ký</a
+                     >
+                  </li>
+                  <li>|</li>
+                  <li>
+                     <a th:href="@{/login}"
+                        ><i class="fa fa-user"></i>Đăng nhập</a
+                     >
+                  </li>
+                  <li>|</li>
+                  <li><i class="fa fa-fax"></i>Liên hệ: 18001001</li>
+                  <li></li>
+               </ul>
+               <ul th:case="true">
+                  <li><a th:href="@{/logout}">Đăng xuất</a></li>
+                  <li>|</li>
+                  <li th:text="'Hello ' + ${session.user.fullname}"></li>
+                  <li>|</li>
+                  <li><i class="fa fa-fax"></i>Liên hệ: 18001001</li>
+               </ul>
             </div>
+         </div>
+         </div>
+         <div class="header_center">
+            <div class="header_center_primary">
+               <div class="logo">
+                  <a th:href="@{/}"><img th:src="@{images/icon/logo.png}" /></a>
+               </div>
+               <div class="search">
+                  <input type="text" placeholder="Nhập từ khóa cần tìm" />
+                  <button><i class="fa fa-search"></i></button>
+               </div>
+               <div class="cart">
+                  <i class="fa fa-shopping-cart"></i>
+                  <div class="number_cart" th:text="'Giỏ hàng của bạn (' + ${cartLength} + ') sản phẩm'"></div>
+               </div>
+            </div>
+         </div>
+      </header>
+      <div class="content">
+         <div class="container">
+            <div class="box-product-cart">
+               <div class="box-product">
+                  <div class="box-product-title box">
+                     <div class="product_img">Hình Ảnh</div>
+                     <div class="product_name">Tên Sản Phẩm</div>
+                     <div class="product_price">Đơn Giá</div>
+                     <div class="product_quantity">Số Lượng</div>
+                     <div class="product_total">Tổng Tiền</div>
+                     <div class="product_function"></div>
+                  </div>
+                  <div class="product box" th:each = "item : ${cartList}">
+                     <div class="product_img">
+                        <img th:src = "@{/{image} (image = ${item.vegetable.image})}" width="50" height="50" th:alt="${item.vegetable.vegetableName}"/>
+                     </div>
+                     <div class="product_name">
+                        <p th:text = "${item.vegetable.VegetableName}"></p>
+                     </div>
+                     <div class="product_price">
+                        <p th:text = "${item.vegetable.price} + ' đ'"></p>
+                     </div>
+                     <div class="product_quantity">
+                        <form th:action="@{/shoppingcart/update}" method="post" id="updateProduct">
+                           <input type="hidden" th:value="${item.vegetable.vegetableID}" name="id">
+                           <input th:id="${item.vegetable.VegetableName}" name = "quantity" type="hidden" th:value = "${item.quantity}" min = "1" th:max = "${item.vegetable.amount}">
+                           <button type="submit" class="incre">
+                              <a href="#" class="decre"
+                                 ><i class="fa fa-minus"></i
+                              ></a>
+                           </button>
+                           <p th:text = "${item.quantity}"></p>
+                           <button type="submit" class="incre">
+                              <a href="#" class="incre"
+                                 ><i class="fa fa-plus"></i
+                              ></a>
+                           </button>
+                        </form>
+                     </div>
+                     <div class="product_total">
+                        <p th:text = "${item.vegetable.price * item.quantity} + ' đ'"></p>
+                     </div>
+                     <div class="product_function">
+                        <a class="open-modal-btn" th:href = "@{/shoppingcart/delete/{id} (id = ${item.vegetable.vegetableID})}"
+                           ><i class="fa fa-trash"></i
+                        ></a>
+                     </div>
+                  </div>
+               </div>
+               <div class="back-product">
+                  <a th:href="@{/}">
+                     <div class="btn-back-product">
+                        <i class="fa fa-long-arrow-left">
+                           Tiếp tục xem sản phẩm</i
+                        >
+                     </div>
+                  </a>
+               </div>
+            </div>
+            <div class="box-order">
+               <form th:action="@{shoppingcart/orders/add}" method="post">
+                  <div class="box-order-title">
+                     <h4>THANH TOÁN</h4>
+                  </div>
+                  <div class="information">
+                     <div class="information_title">Note:</div>
+                     <br />
+                     <textarea name="note" id=""></textarea>
+                  </div>
+                  <div class="pay-bill">
+                     <div class="title-bill">
+                        <!-- <div class="total-product">Tổng tiền hàng:</div> -->
+                        <div class="total-pay">Tổng thanh toán:</div>
+                     </div>
+                     <div class="price-bill">
+                        <!-- <div class="total-product">30.000 đ</div> -->
+                        <div class="total-pay" th:text="${total}"></div>
+                     </div>
+                  </div>
+                  <div class="btn-pay-bill">
+                     <div class="btn-pay-bill-primary">
+                        <button type="submit" name="btn_checkout">Đặt hàng</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <footer>
+        <div class="footer__parent">
+           <div class="footer_top">
+              <div>
+                 <div class="footer_title">THÔNG TIN LIÊN HỆ</div>
+                 <div class="list_footer">
+                    <div>
+                       Địa chỉ: 273 An Dương Vương, Phường 8, Quận 5, Thành phố
+                       Hồ Chí Minh
+                    </div>
+                    <div>Hotline: 0388 697 342</div>
+                    <div>Zalo: 0388 697 342</div>
+                    <div>Email: deadlinetime@gmail.com</div>
+                    <div class="list_footer_img">
+                       <div class="link-icon">
+                          <img
+                             th:src="@{/images/icon/facebook.png}"
+                             alt="facebook"
+                          />
+                       </div>
+                       <div class="link-icon">
+                          <img
+                             th:src="@{/images/icon/youtube.png}"
+                             alt="youtube"
+                          />
+                       </div>
+                       <div class="link-icon">
+                          <img
+                             th:src="@{/images/icon/images.png}"
+                             alt="images"
+                          />
+                       </div>
+                       <div class="link-icon">
+                          <img th:src="@{/images/icon/zalo.webp}" alt="zalo" />
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <div class="map">
+                 <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d37290.80751769916!2d106.64293002453445!3d10.756565289380958!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1b7c3ed289%3A0xa06651894598e488!2sSaigon%20University!5e0!3m2!1sen!2s!4v1679928772147!5m2!1sen!2s"
+                    width="500"
+                    height="300"
+                    style="border: 0"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                 >
+                 </iframe>
+              </div>
+           </div>
+           <div class="footer_center">
+              <div class="footer_center_primary">
+                 <div class="ptth">
+                    <div class="footer_title">Phương thức thanh toán</div>
+                    <div class="ptth_1">
+                       <div>
+                          <img th:src="@{/images/icon/qrcode.svg}" />
+                          <p>QR Code</p>
+                       </div>
+                       <div>
+                          <img th:src="@{/images/icon/tienmat.svg}" />
+                          <p>Tiền mặt</p>
+                       </div>
+                       <div>
+                          <img th:src="@{/images/icon/nganhang.svg}" alt="" />
+                          <p>Internet Banking</p>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="dsnh">
+                    <div class="footer_title">
+                       <p>Danh sách các ngân hàng thanh toán online:</p>
+                       <img th:src="@{/images/icon/vnpay_banks.png}" />
+                    </div>
+                 </div>
+              </div>
+           </div>
         </div>
-    </body>
-    <!--    <script>
-            let quantityItem = document.querySelector("input#quantity");
-            quantityItem.addEventListener('change', (e) => {
-                let totalItem = document.querySelector("th#total");
-                let total = parseFloat(e.target.value) * parseFloat(document.querySelector("th#price").textContent);
-                totalItem.innerHTML = total;
-            })
-        </script>-->
+     </footer>
+
+      <div class="copyright">
+         <div class="copyright-primary">
+            <p>© Bản quyền thuộc về Deadline Time</p>
+         </div>
+      </div>
+   </body>
+   <script>
+      let btnDecrQuantity = document.querySelectorAll("#updateProduct #decre");
+      let btnIncrQuantity = document.querySelectorAll("#updateProduct #incre");
+      let quantity = document.querySelectorAll("input#quantity");
+
+      btnDecrQuantity.addEventListener('click', () => {
+         quantity.value--;
+      })
+
+      btnIncrQuantity.addEventListener('click', () => {
+         quantity.value++;
+      })
+
+   </script>
 </html>

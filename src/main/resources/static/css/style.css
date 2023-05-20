@@ -1,18 +1,83 @@
 * {
-   box-sizing: border-box;
-   font-family: "Quicksand", sans-serif;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
-
-table, th, tr {
-  border: 1px solid;
-}
-
-.form-content {
-    margin-bottom: 20px;
-}
-
-.my-flex {
+body{
+        height: 100vh;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+}
+.form {
+    background: #fff;
+    max-width: 470px;
+    width: 100%;
+    border-radius: 12px;
+    padding: 20px 30px 60px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form header {
+    font-size: 30px;
+    text-align: center;
+    color: #333333;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.form input {
+    height: 60px;
+    width: 410px;
+    outline: none;
+    border: 1px solid #aaa;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 8px;
+    background: #fff;
+}
+.signin .sign_primary a{
+    color: #333;
+    text-decoration: none;
+}
+.form input[type="submit"] {
+    background: #4070f4;
+    color: #fff;
+    border: none;
+}
+.form input[type="submit"]:hover {
+    background: #3159c9;
+    color: #fff;
+    border: none;
+}
+.signin input:focus {
+    box-shadow: 0 1px 0 #ddd;
+}
+.form .bottom{
+    margin-top: 20px;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    text-align: right;
+}
+.form .bottom a{
+    color: #4070f4;
+    text-decoration: none;
+}
+
+.checkbox input[type="checkbox"] {
+    height: 16px;
+    width: 16px;
+    accent-color: #333333;
+    cursor: pointer;
 }
