@@ -6,6 +6,8 @@ package com.deadline.ShopMarketMVC.Controller;
 
 import com.deadline.ShopMarketMVC.Model.Customers;
 import com.deadline.ShopMarketMVC.Service.CustomerServiceImpl;
+import com.deadline.ShopMarketMVC.Service.OrderDetailService;
+
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerServiceImpl customerService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
 
     @RequestMapping(value = "/customers")
     public String loadCustomerList(Model model) {
@@ -65,6 +70,7 @@ public class CustomerController {
     @RequestMapping(value = "/logout")
     public String login(HttpSession session) {
         session.removeAttribute("user");
+        orderDetailService.clear();
         return "redirect:";
     }
 
