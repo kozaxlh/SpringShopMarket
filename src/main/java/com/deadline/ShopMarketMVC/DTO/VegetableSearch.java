@@ -13,21 +13,21 @@ import lombok.Data;
 @Data
 public class VegetableSearch {
 
-    private Integer categoryID;
+    private Integer catagoryID;
     private String vegetableName;
     protected VegetableSearchEnum condition;
 
     VegetableSearch(Integer categoryID, String vegetableName) {
-        this.categoryID = categoryID;
+        this.catagoryID = categoryID;
         this.vegetableName = vegetableName;
 
     }
 
     public void setCondition() {
-        if (categoryID != null && vegetableName != null) {
+        if (catagoryID != null && vegetableName != null) {
             condition = VegetableSearchEnum.BOTH;
         }
-        else if (categoryID != null) {
+        else if (catagoryID != null) {
             condition = VegetableSearchEnum.CATEGORY;
         }
         else if (vegetableName != null) {
