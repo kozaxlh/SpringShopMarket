@@ -6,7 +6,9 @@ package com.deadline.ShopMarketMVC.Controller;
 
 import com.deadline.ShopMarketMVC.Model.OrderDetail;
 import com.deadline.ShopMarketMVC.Model.Vegetable;
+import com.deadline.ShopMarketMVC.Model.Customers;
 import com.deadline.ShopMarketMVC.Service.OrderDetailService;
+import com.deadline.ShopMarketMVC.Service.OrderService;
 import com.deadline.ShopMarketMVC.Service.VegetableService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class OrderDetailController {
 
     @Autowired
+    private OrderService orderService;
+
+    @Autowired
     private OrderDetailService orderDetailService;
 
     @Autowired
@@ -36,6 +41,8 @@ public class OrderDetailController {
     public String loadCart(Model model) {
         model.addAttribute("cartList", orderDetailService.getAllItems());
         model.addAttribute("total", orderDetailService.getTotal());
+        model.addAttribute("cartLength", orderDetailService.getCount());
+
         return "cart";
     }
 
@@ -51,10 +58,10 @@ public class OrderDetailController {
             item.setPrice(product.getPrice());
 
             orderDetailService.add(item);
-            return new ModelAndView("redirect:/vegetable");
+            return new ModelAndView("redirect:/");
         }
         else {
-            return new ModelAndView("redirect:/vegetable/missing","error", "Bạn phải đăng nhập trước khi mua hàng");
+            return new ModelAndView("redirect:/missing","error", "Bạn phải đăng nhập trước khi mua hàng");
         }
     }
     
@@ -74,5 +81,11 @@ public class OrderDetailController {
     public String updateCart(@RequestParam("id") Integer id, @RequestParam("quantity") short quantity) {
         orderDetailService.update(id, quantity);
         return "redirect:/shoppingcart";
+    }
+
+    @RequestMapping("/orders/add")
+    public String page(@RequestParam("note") String note ,HttpSession session) {
+        orderService.addOrder((Customers) session.getAttribute("user"), note);
+        return "redirect:/";
     }
 }
