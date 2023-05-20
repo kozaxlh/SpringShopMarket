@@ -7,6 +7,7 @@ package com.deadline.ShopMarketMVC.Controller;
 import com.deadline.ShopMarketMVC.DTO.VegetableSearch;
 import com.deadline.ShopMarketMVC.Model.Vegetable;
 import com.deadline.ShopMarketMVC.Service.CategoryServiceImpl;
+import com.deadline.ShopMarketMVC.Service.OrderDetailService;
 import com.deadline.ShopMarketMVC.Service.VegetableServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,26 +30,32 @@ public class VegetableController {
     
     @Autowired
     private CategoryServiceImpl categoryService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
+
     
-    @RequestMapping(value = "/vegetable")
+    @RequestMapping(value = "/")
     public String loadVegetableList(Model model) {
         List<Vegetable> list = vegetableService.getVegetableList();
         
         model.addAttribute("categoryList", categoryService.getCategoryList());
         model.addAttribute("vegetableList", list);
+        model.addAttribute("cartLength", orderDetailService.getCount());
 
-        return "vegetable";
+        return "index";
     }
     
-    @RequestMapping(value = "/vegetable/missing")
+    @RequestMapping(value = "/missing")
     public String errorLoad(@RequestParam("error") String error, Model model) {
         List<Vegetable> list = vegetableService.getVegetableList();
         
         model.addAttribute("categoryList", categoryService.getCategoryList());
         model.addAttribute("vegetableList", list);
+        model.addAttribute("cartLength", orderDetailService.getCount());
         model.addAttribute("error",error);
 
-        return "vegetable";
+        return "index";
     }
     
     @RequestMapping(value = "/searchvegetable", method = RequestMethod.GET)
@@ -57,8 +64,9 @@ public class VegetableController {
         
         model.addAttribute("categoryList", categoryService.getCategoryList());
         model.addAttribute("vegetableList", list);
+        model.addAttribute("cartLength", orderDetailService.getCount());
 
-        return "vegetable";
+        return "index";
     }
     
     @RequestMapping(value = "/bestsale", method = RequestMethod.GET)
@@ -67,8 +75,9 @@ public class VegetableController {
         
         model.addAttribute("categoryList", categoryService.getCategoryList());
         model.addAttribute("vegetableList", list);
+        model.addAttribute("cartLength", orderDetailService.getCount());
 
-        return "vegetable";
+        return "index";
     }
     
 }
