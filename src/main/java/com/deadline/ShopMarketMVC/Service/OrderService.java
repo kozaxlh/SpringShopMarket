@@ -12,6 +12,6 @@ import com.deadline.ShopMarketMVC.Model.Customers;
  */
 public interface OrderService {
 
-    void addOrder(Customers user);
+    void addOrder(Customers user, String note);
     
 }

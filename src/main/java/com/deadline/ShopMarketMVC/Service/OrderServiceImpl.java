@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     
     @Override
-    public void addOrder(Customers user) {
+    public void addOrder(Customers user, String note) {
         int insertID = orderRepository.getLastInsertedID() + 1;
         
         List<OrderDetail> cartList = new ArrayList(orderDetailService.getAllItems());
@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
             order.setDate(Calendar.getInstance());
             order.setTotal((float) orderDetailService.getTotal());
             order.setOrderdetailList(cartList);
-            order.setNote("");
+            order.setNote(note);
         
         orderRepository.save(order);
         
