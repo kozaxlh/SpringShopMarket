@@ -18,11 +18,11 @@ import org.springframework.stereotype.Repository;
 public interface VegetableRepository extends JpaRepository<Vegetable, Integer> {
     Vegetable findByVegetableID(Integer vegetableID);
     
-    List<Vegetable> findByCatagoryID(Integer categoryID);
+    List<Vegetable> findByCatagoryID(Integer catagoryID);
     
     List<Vegetable> findByVegetableNameContaining(String name);
     
-    List<Vegetable> findByCatagoryIDAndVegetableNameContaining(Integer categoryID, String name);
+    List<Vegetable> findByCatagoryIDAndVegetableNameContaining(Integer catagoryID, String name);
     
     @Query("SELECT V\n" +
             "FROM Vegetable V INNER JOIN OrderDetail OD ON OD.vegetable.vegetableID = V.vegetableID\n" +
