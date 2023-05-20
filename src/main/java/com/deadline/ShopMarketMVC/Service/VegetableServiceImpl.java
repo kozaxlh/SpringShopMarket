@@ -33,12 +33,12 @@ public class VegetableServiceImpl implements VegetableService {
         List<Vegetable> list = null;
         list = switch (search.getCondition()) {
             case CATEGORY ->
-                vegetableRepository.findByCatagoryID(search.getCategoryID());
+                vegetableRepository.findByCatagoryID(search.getCatagoryID());
             case VEGETABLENAME ->
                 vegetableRepository.findByVegetableNameContaining(search.getVegetableName());
             case BOTH ->
                 vegetableRepository.findByCatagoryIDAndVegetableNameContaining(
-                        search.getCategoryID(), 
+                        search.getCatagoryID(), 
                         search.getVegetableName()
                 );
         };
