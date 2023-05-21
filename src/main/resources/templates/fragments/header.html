@@ -1,0 +1,63 @@
+<header>
+   <div class="header_top">
+      <div class="header_top_primary" th:switch="${session.user != null}">
+         <ul th:case="false">
+            <li>
+               <a th:href="@{/register}"
+                  ><i class="fa fa-lock"></i>Đăng ký</a
+               >
+            </li>
+            <li>|</li>
+            <li>
+               <a th:href="@{/login}"
+                  ><i class="fa fa-user"></i>Đăng nhập</a
+               >
+            </li>
+            <li>|</li>
+            <li><i class="fa fa-fax"></i>Liên hệ: 18001001</li>
+            <li></li>
+         </ul>
+         <ul th:case="true">
+            <li><a th:href="@{/logout}">Đăng xuất</a></li>
+            <li>|</li>
+            <li th:text="'Hello ' + ${session.user.fullname}"></li>
+            <li>|</li>
+            <li><i class="fa fa-fax"></i>Liên hệ: 18001001</li>
+         </ul>
+      </div>
+   </div>
+   <div class="header_center">
+      <div class="header_center_primary">
+         <div class="logo">
+            <a th:href="@{/}"><img th:src="@{images/icon/logo.png}" /></a>
+         </div>
+         <form
+            class="form-content"
+            th:action="@{/searchvegetable}"
+            th:object="${search}"
+            target="_self"
+            method="get"
+         >
+            <div class="search">
+               <input
+                  type="text"
+                  class="form-input"
+                  name="vegetableName"
+                  placeholder="Nhập từ khóa cần tìm"
+               />
+               <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+         </form>
+
+         <div class="cart">
+            <a th:href="@{/shoppingcart}">
+               <i class="fa fa-shopping-cart"></i>
+               <div
+                  class="number_cart"
+                  th:text="'Giỏ hàng của bạn (' + ${cartLength} + ') sản phẩm'"
+               ></div>
+            </a>
+         </div>
+      </div>
+   </div>
+</header>
